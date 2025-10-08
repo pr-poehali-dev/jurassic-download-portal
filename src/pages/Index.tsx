@@ -221,14 +221,23 @@ const Index = () => {
           <h2 className="text-5xl font-bold text-center mb-4">Галерея скриншотов</h2>
           <p className="text-center text-foreground/70 mb-12 text-lg">Оцени графику игры</p>
           <div className="grid md:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
+            {[
+              'https://images.unsplash.com/photo-1551818255-e6e10975bc17?w=800&q=80',
+              'https://images.unsplash.com/photo-1578663899664-27b62dc07603?w=800&q=80',
+              'https://images.unsplash.com/photo-1551818255-e6e10975bc17?w=800&q=80',
+              'https://images.unsplash.com/photo-1578663899664-27b62dc07603?w=800&q=80',
+              'https://images.unsplash.com/photo-1551818255-e6e10975bc17?w=800&q=80',
+              'https://images.unsplash.com/photo-1578663899664-27b62dc07603?w=800&q=80'
+            ].map((img, index) => (
               <div 
-                key={item}
+                key={index}
                 className="relative aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg overflow-hidden group cursor-pointer hover:scale-105 transition-transform duration-300"
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Icon name="Image" size={48} className="text-foreground/30" />
-                </div>
+                <img 
+                  src={img} 
+                  alt={`Jurassic World Evolution Screenshot ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <Icon name="ZoomIn" size={32} className="text-white" />
                 </div>
