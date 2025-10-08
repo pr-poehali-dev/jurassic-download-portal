@@ -2,8 +2,38 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
+import { useEffect, useState } from "react";
 
 const Index = () => {
+  const [visitorCount, setVisitorCount] = useState<number>(0);
+
+  useEffect(() => {
+    const trackVisit = async () => {
+      try {
+        await fetch('https://functions.poehali.dev/5578ea7b-bc1c-4e10-882d-e3edde66a264', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ page_url: window.location.pathname })
+        });
+      } catch (error) {
+        console.error('Failed to track visit:', error);
+      }
+    };
+
+    const fetchVisitorCount = async () => {
+      try {
+        const response = await fetch('https://functions.poehali.dev/5578ea7b-bc1c-4e10-882d-e3edde66a264');
+        const data = await response.json();
+        setVisitorCount(data.total || 0);
+      } catch (error) {
+        console.error('Failed to fetch visitor count:', error);
+      }
+    };
+
+    trackVisit();
+    fetchVisitorCount();
+  }, []);
+
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -285,7 +315,11 @@ const Index = () => {
           <div className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             JURASSIC WORLD EVOLUTION
           </div>
-          <p className="text-foreground/70 mb-6">© 2024 Все права защищены</p>
+          <p className="text-foreground/70 mb-2">© 2024 Все права защищены</p>
+          <div className="flex items-center justify-center gap-2 mb-6 text-foreground/60">
+            <Icon name="Users" size={18} />
+            <span className="text-sm">Посетителей: <span className="font-bold text-primary">{visitorCount.toLocaleString()}</span></span>
+          </div>
           <div className="flex gap-6 justify-center">
             {['Facebook', 'Twitter', 'Youtube', 'Twitch'].map((social) => (
               <button 

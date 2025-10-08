@@ -1,0 +1,23 @@
+{
+  "tests": [
+    {
+      "name": "Get visitor count",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Track new visit",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "page_url": "/"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
